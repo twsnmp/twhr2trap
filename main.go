@@ -200,6 +200,9 @@ func isExcludeDisk(p disk.PartitionStat) bool {
 	if strings.HasPrefix(p.Mountpoint, "/System/Volumes") {
 		return true
 	}
+	if strings.HasPrefix(p.Mountpoint, "/boot/") {
+		return true
+	}
 	return false
 }
 

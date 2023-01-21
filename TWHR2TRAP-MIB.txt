@@ -1,0 +1,83 @@
+TWHRTRAP-MIB DEFINITIONS ::= BEGIN
+
+   IMPORTS
+       MODULE-IDENTITY, OBJECT-TYPE, NOTIFICATION-TYPE,enterprises
+           FROM SNMPv2-SMI
+       DisplayString FROM SNMPv2-TC;
+
+twise                OBJECT IDENTIFIER ::= { enterprises 17861 }
+twProducts           OBJECT IDENTIFIER ::= { twise 1 }
+
+twHr2Trap MODULE-IDENTITY
+       LAST-UPDATED "2301200000Z"
+       ORGANIZATION "Twise Labo Inc."
+       CONTACT-INFO
+                  "Masayuki Yamai
+               Postal: Twise Labo  Inc.
+                       Saitama Japan
+               E-mail: twsnmp@gmail.com"
+       DESCRIPTION       "A MIB module for twhr2trap"
+
+      ::= { twProducts 10 }
+
+twHr2TrapTraps            OBJECT IDENTIFIER ::= { twHr2Trap 0 }
+twHr2TrapObjects          OBJECT IDENTIFIER ::= { twHr2Trap 1 }
+
+-- Trap data
+
+twHr2TrapHrName OBJECT-TYPE
+    SYNTAX     DisplayString
+    MAX-ACCESS accessible-for-notify
+    STATUS     current
+    DESCRIPTION "Host resource name"
+    ::= { twHr2TrapObjects 1 }
+
+twHr2TrapThresold OBJECT-TYPE
+    SYNTAX     INTEGER
+    UNITS      "%"
+    MAX-ACCESS accessible-for-notify
+    STATUS     current
+    DESCRIPTION "TRAP thresold"
+    ::= { twHr2TrapObjects 2 }
+
+twHr2TrapCurrentValue OBJECT-TYPE
+    SYNTAX     INTEGER
+    UNITS      "%"
+    MAX-ACCESS accessible-for-notify
+    STATUS     current
+    DESCRIPTION "Current value"
+    ::= { twHr2TrapObjects 3 }
+
+-- twHr2Trap  Traps
+
+twHr2TrapCPUThOverTrap  NOTIFICATION-TYPE
+    OBJECTS { twHr2TrapHrName,twHr2TrapThresold, twHr2TrapCurrentValue }
+    STATUS  current
+    DESCRIPTION "Trap of CPU Usage thresold over."
+    ::= { twHr2TrapTraps 1 }
+
+twHr2TrapMemThOverTrap  NOTIFICATION-TYPE
+    OBJECTS { twHr2TrapHrName,twHr2TrapThresold, twHr2TrapCurrentValue }
+    STATUS  current
+    DESCRIPTION "Trap of load thresold over."
+    ::= { twHr2TrapTraps 2 }
+
+twHr2TrapLoadThOverTrap  NOTIFICATION-TYPE
+    OBJECTS { twHr2TrapHrName,twHr2TrapThresold, twHr2TrapCurrentValue }
+    STATUS  current
+    DESCRIPTION "Trap of load thresold over."
+    ::= { twHr2TrapTraps 3 }
+
+twHr2TrapDiskThOverTrap  NOTIFICATION-TYPE
+    OBJECTS { twHr2TrapHrName,twHr2TrapThresold, twHr2TrapCurrentValue }
+    STATUS  current
+    DESCRIPTION "Trap of load thresold over."
+    ::= { twHr2TrapTraps 4 }
+
+twHr2TrapBackToNormal  NOTIFICATION-TYPE
+    OBJECTS { twHr2TrapHrName,twHr2TrapThresold, twHr2TrapCurrentValue }
+    STATUS  current
+    DESCRIPTION "Trap of back to normal."
+    ::= { twHr2TrapTraps 5 }
+
+END

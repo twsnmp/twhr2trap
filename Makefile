@@ -1,7 +1,7 @@
 .PHONY: all test clean zip mac
 
 ### バージョンの定義
-VERSION     := "v1.0.0"
+VERSION     := "v1.0.1"
 COMMIT      := $(shell git rev-parse --short HEAD)
 
 ### コマンドの定義
@@ -14,7 +14,7 @@ ZIP          = zip
 ### ターゲットパラメータ
 DIST = dist
 SRC = ./main.go 
-TARGETS     = $(DIST)/twhr2trap.exe $(DIST)/twhr2trap.app $(DIST)/twhr2trap $(DIST)/twhr2trap.arm
+TARGETS     = $(DIST)/twhr2trap.exe $(DIST)/twhr2trap.app $(DIST)/twhr2trap $(DIST)/twhr2trap.arm $(DIST)/twhr2trap.arm64
 GO_PKGROOT  = ./...
 
 ### PHONY ターゲットのビルドルール
@@ -29,6 +29,7 @@ zip: $(TARGETS)
 	cd dist && $(ZIP) twhr2trap_mac.zip twhr2trap.app
 	cd dist && $(ZIP) twhr2trap_linux_amd64.zip twhr2trap
 	cd dist && $(ZIP) twhr2trap_linux_arm.zip twhr2trap.arm
+	cd dist && $(ZIP) twhr2trap_linux_arm64.zip twhr2trap.arm64
 
 ### 実行ファイルのビルドルール
 $(DIST)/twhr2trap.exe: $(SRC)
@@ -37,6 +38,8 @@ $(DIST)/twhr2trap.app: $(SRC)
 	env GO111MODULE=on GOOS=darwin GOARCH=amd64 $(GO_BUILD) $(GO_LDFLAGS) -o $@
 $(DIST)/twhr2trap.arm: $(SRC)
 	env GO111MODULE=on GOOS=linux GOARCH=arm GOARM=7 $(GO_BUILD) $(GO_LDFLAGS) -o $@
+$(DIST)/twhr2trap.arm64: $(SRC)
+	env GO111MODULE=on GOOS=linux GOARCH=arm64 $(GO_BUILD) $(GO_LDFLAGS) -o $@
 $(DIST)/twhr2trap: $(SRC)
 	env GO111MODULE=on GOOS=linux GOARCH=amd64 $(GO_BUILD) $(GO_LDFLAGS) -o $@
 

@@ -45,11 +45,13 @@ v1.0.0をリリースしました。(2023/1/21)
 ## Build/ビルド方法
 
 Build is done with make.
-````
+
+```
 make
 ```
 
 The following targets can be specified.
+
 ```
   all: Build all executables (optional)
   mac: Build executables for Mac
